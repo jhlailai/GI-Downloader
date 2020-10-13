@@ -836,14 +836,10 @@ class googleimagesdownload:
                 else:
                     prefix = ''
 
-                """ Get file type """
-                file_type = image_name[-3:]
-
                 if no_numbering:
                     path = main_directory + "/" + dir_name + "/" + prefix + image_name
                 else:
-                    """ State location of downloaded file and the file name """
-                    path = main_directory + "/" + dir_name + "/" + file_type + "/" + prefix + image_name
+                    path = main_directory + "/" + dir_name + "/" + prefix + str(count) + "." + image_name
 
                 try:
                     output_file = open(path, 'wb')
