@@ -776,7 +776,7 @@ class googleimagesdownload:
     # Download Images
     def download_image(self, image_url, image_format, main_directory, dir_name, count, print_urls, socket_timeout,
                        prefix, print_size, no_numbering, no_download, save_source, img_src, silent_mode, thumbnail_only,
-                       format, ignore_urls):
+                       format, ignore_urls, arguments):
         if not silent_mode:
             if print_urls or no_download:
                 print("Image URL: " + image_url)
@@ -854,6 +854,25 @@ class googleimagesdownload:
 
                 try:
                     output_file = open(path, 'wb')
+
+
+                    img_downloaded = Image.open(output_file)
+                    width, height = img_downloaded.size
+                    image_pixel= width * height
+
+                    if arguments["size"] == "=70MP":
+                        size_select = arguments["size"]
+                        size_num = size_select[1:-2]
+                        size_num = int(size_num)
+                        if size_num != image_pixel:
+                            download_status = 'fail'
+                            download_message = "Invalid image format '" + type + "'. Skipping..."
+                            return_image_name = ''
+                            absolute_path = ''
+                            output_file.close()
+                            return download_status, download_message, return_image_name, absolute_path
+
+
                     output_file.write(data)
                     output_file.close()
                     if save_source:
