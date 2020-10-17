@@ -100,7 +100,8 @@ def user_input():
                                      'labeled-for-nocommercial-reuse'])
         parser.add_argument('-s', '--size', help='image size', type=str, required=False,
                             choices=['large', 'medium', 'icon', '>400*300', '>640*480', '>800*600', '>1024*768', '>2MP',
-                                     '>4MP', '>6MP', '>8MP', '>10MP', '>12MP', '>15MP', '>20MP', '>40MP', '>70MP'])
+                                     '>4MP', '>6MP', '>8MP', '>10MP', '>12MP', '>15MP', '>20MP', '>40MP', '>70MP', '>70MP',
+                                     '=2MP', '=4MP', '=6MP', '=8MP', '=10MP', '=12MP', '=15MP', '=20MP', '=40MP', '=70MP'])
         parser.add_argument('-es', '--exact_size', help='exact image resolution "WIDTH,HEIGHT"', type=str,
                             required=False)
         parser.add_argument('-t', '--type', help='image type', type=str, required=False,
@@ -537,7 +538,10 @@ class googleimagesdownload:
                             '>1024*768': 'visz:lt,islt:xga', '>2MP': 'isz:lt,islt:2mp', '>4MP': 'isz:lt,islt:4mp',
                             '>6MP': 'isz:lt,islt:6mp', '>8MP': 'isz:lt,islt:8mp', '>10MP': 'isz:lt,islt:10mp',
                             '>12MP': 'isz:lt,islt:12mp', '>15MP': 'isz:lt,islt:15mp', '>20MP': 'isz:lt,islt:20mp',
-                            '>40MP': 'isz:lt,islt:40mp', '>70MP': 'isz:lt,islt:70mp'}],
+                            '>40MP': 'isz:lt,islt:40mp', '>70MP': 'isz:lt,islt:70mp', '=2MP': 'isz:lt,islt:2mp',
+                            '=4MP': 'isz:lt,islt:4mp', '=6MP': 'isz:lt,islt:6mp', '=8MP': 'isz:lt,islt:8mp', '=10MP':
+                            'isz:lt,islt:10mp', '=12MP': 'isz:lt,islt:12mp', '=15MP': 'isz:lt,islt:15mp',
+                            '=20MP': 'isz:lt,islt:20mp', '=40MP': 'isz:lt,islt:40mp', '=70MP': 'isz:lt,islt:70mp'}],
                   'type': [arguments['type'], {'face': 'itp:face', 'photo': 'itp:photo', 'clipart': 'itp:clipart',
                                                'line-drawing': 'itp:lineart', 'animated': 'itp:animated'}],
                   'time': [arguments['time'], {'past-24-hours': 'qdr:d', 'past-7-days': 'qdr:w', 'past-month': 'qdr:m',
@@ -628,6 +632,7 @@ class googleimagesdownload:
             if not os.path.exists(main_directory):
                 os.makedirs(main_directory)
                 time.sleep(0.15)
+
                 path = (dir_name)
                 sub_directory = os.path.join(main_directory, path)
                 if not os.path.exists(sub_directory):
@@ -665,33 +670,34 @@ class googleimagesdownload:
                 sub_directory = os.path.join(main_directory, path)
                 if not os.path.exists(sub_directory):
                     os.makedirs(sub_directory)
+
+                """ Create file type folders if not found in file name of search results folder (dir_name) for downloading files """
+                jpg_directory = os.path.join(main_directory, path, "jpg")
+                png_directory = os.path.join(main_directory, path, "png")
+                webp_directory = os.path.join(main_directory, path, "webp")
+                gif_directory = os.path.join(main_directory, path, "gif")
+                bmp_directory = os.path.join(main_directory, path, "bmp")
+                ico_directory = os.path.join(main_directory, path, "ico")
+                svg_directory = os.path.join(main_directory, path, "svg")
+                if not os.path.exists(jpg_directory):
+                    os.makedirs(jpg_directory)
+                if not os.path.exists(png_directory):
+                    os.makedirs(png_directory)
+                if not os.path.exists(webp_directory):
+                    os.makedirs(webp_directory)
+                if not os.path.exists(gif_directory):
+                    os.makedirs(gif_directory)
+                if not os.path.exists(bmp_directory):
+                    os.makedirs(bmp_directory)
+                if not os.path.exists(ico_directory):
+                    os.makedirs(ico_directory)
+                if not os.path.exists(svg_directory):
+                    os.makedirs(svg_directory)
+
                 if thumbnail or thumbnail_only:
                     sub_directory_thumbnail = os.path.join(main_directory, dir_name_thumbnail)
                     if not os.path.exists(sub_directory_thumbnail):
                         os.makedirs(sub_directory_thumbnail)
-
-                    """ Create file type folders if not found in file name of search results folder (dir_name) for downloading files """
-                    jpg_directory = os.path.join(main_directory, path, "jpg")
-                    png_directory = os.path.join(main_directory, path, "png")
-                    webp_directory = os.path.join(main_directory, path, "webp")
-                    gif_directory = os.path.join(main_directory, path, "gif")
-                    bmp_directory = os.path.join(main_directory, path, "bmp")
-                    ico_directory = os.path.join(main_directory, path, "ico")
-                    svg_directory = os.path.join(main_directory, path, "svg")
-                    if not os.path.exists(jpg_directory):
-                        os.makedirs(jpg_directory)
-                    if not os.path.exists(png_directory):
-                        os.makedirs(png_directory)
-                    if not os.path.exists(webp_directory):
-                        os.makedirs(webp_directory)
-                    if not os.path.exists(gif_directory):
-                        os.makedirs(gif_directory)
-                    if not os.path.exists(bmp_directory):
-                        os.makedirs(bmp_directory)
-                    if not os.path.exists(ico_directory):
-                        os.makedirs(ico_directory)
-                    if not os.path.exists(svg_directory):
-                        os.makedirs(svg_directory)
 
         except OSError as e:
             if e.errno != 17:
@@ -977,6 +983,7 @@ class googleimagesdownload:
         return items, errorCount, abs_path
 
     # Bulk Download
+
     def download(self, arguments):
         paths_agg = {}
         # for input coming from other python files
