@@ -6,6 +6,7 @@
 
 # Import Libraries
 import sys
+from PIL import Image
 
 version = (3, 0)
 cur_version = sys.version_info
