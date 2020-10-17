@@ -632,6 +632,30 @@ class googleimagesdownload:
                 sub_directory = os.path.join(main_directory, path)
                 if not os.path.exists(sub_directory):
                     os.makedirs(sub_directory)
+
+                """ Create file type folders if not found in file name of search results folder (dir_name) for downloading files """
+                jpg_directory = os.path.join(main_directory, path, "jpg")
+                png_directory = os.path.join(main_directory, path, "png")
+                webp_directory = os.path.join(main_directory, path, "webp")
+                gif_directory = os.path.join(main_directory, path, "gif")
+                bmp_directory = os.path.join(main_directory, path, "bmp")
+                ico_directory = os.path.join(main_directory, path, "ico")
+                svg_directory = os.path.join(main_directory, path, "svg")
+                if not os.path.exists(jpg_directory):
+                    os.makedirs(jpg_directory)
+                if not os.path.exists(png_directory):
+                    os.makedirs(png_directory)
+                if not os.path.exists(webp_directory):
+                    os.makedirs(webp_directory)
+                if not os.path.exists(gif_directory):
+                    os.makedirs(gif_directory)
+                if not os.path.exists(bmp_directory):
+                    os.makedirs(bmp_directory)
+                if not os.path.exists(ico_directory):
+                    os.makedirs(ico_directory)
+                if not os.path.exists(svg_directory):
+                    os.makedirs(svg_directory)
+
                 if thumbnail or thumbnail_only:
                     sub_directory_thumbnail = os.path.join(main_directory, dir_name_thumbnail)
                     if not os.path.exists(sub_directory_thumbnail):
@@ -645,6 +669,30 @@ class googleimagesdownload:
                     sub_directory_thumbnail = os.path.join(main_directory, dir_name_thumbnail)
                     if not os.path.exists(sub_directory_thumbnail):
                         os.makedirs(sub_directory_thumbnail)
+
+                    """ Create file type folders if not found in file name of search results folder (dir_name) for downloading files """
+                    jpg_directory = os.path.join(main_directory, path, "jpg")
+                    png_directory = os.path.join(main_directory, path, "png")
+                    webp_directory = os.path.join(main_directory, path, "webp")
+                    gif_directory = os.path.join(main_directory, path, "gif")
+                    bmp_directory = os.path.join(main_directory, path, "bmp")
+                    ico_directory = os.path.join(main_directory, path, "ico")
+                    svg_directory = os.path.join(main_directory, path, "svg")
+                    if not os.path.exists(jpg_directory):
+                        os.makedirs(jpg_directory)
+                    if not os.path.exists(png_directory):
+                        os.makedirs(png_directory)
+                    if not os.path.exists(webp_directory):
+                        os.makedirs(webp_directory)
+                    if not os.path.exists(gif_directory):
+                        os.makedirs(gif_directory)
+                    if not os.path.exists(bmp_directory):
+                        os.makedirs(bmp_directory)
+                    if not os.path.exists(ico_directory):
+                        os.makedirs(ico_directory)
+                    if not os.path.exists(svg_directory):
+                        os.makedirs(svg_directory)
+
         except OSError as e:
             if e.errno != 17:
                 raise
@@ -788,10 +836,14 @@ class googleimagesdownload:
                 else:
                     prefix = ''
 
+                """ Get file type """
+                file_type = image_name[-3:]
+
                 if no_numbering:
                     path = main_directory + "/" + dir_name + "/" + prefix + image_name
                 else:
-                    path = main_directory + "/" + dir_name + "/" + prefix + str(count) + "." + image_name
+                    """ State location of downloaded file and the file name """
+                    path = main_directory + "/" + dir_name + "/" + file_type + "/" + prefix + image_name
 
                 try:
                     output_file = open(path, 'wb')
